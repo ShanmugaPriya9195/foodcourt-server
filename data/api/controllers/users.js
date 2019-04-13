@@ -12,7 +12,10 @@ module.exports = {
       if (err) {
         return callback(err)
       } else if (!user) {
-		 userModel.create({ name: req.body.name, email: req.body.email, password: req.body.password }, function (err, result) {
+		 userModel.create({ name: req.body.name, email: req.body.email, password: req.body.password
+		 ,mobile: req.body.mobile
+			,gender: req.body.gender,	address:req.body.address,
+				city: req.body.city			}, function (err, result) {
 				  if (err) 
 				  	next(err);
 				  else

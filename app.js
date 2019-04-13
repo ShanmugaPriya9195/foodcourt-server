@@ -2,6 +2,8 @@ const express = require('express');
 const logger = require('morgan');
 const foodorders = require('./routes/foodorders') ;
 const users = require('./routes/users');
+const vendors = require('./routes/vendors');
+const admins = require('./routes/admins');
 const bodyParser = require('body-parser');
 const mongoose = require('./model/foodcourt'); //appbase configuration
 var jwt = require('jsonwebtoken');
@@ -21,6 +23,8 @@ res.json({"started":"App Started"});
 
 // public route
 app.use('/users', users);
+app.use('/admins',admins);
+app.use('/vendors',vendors);
 
 // private route
 app.use('/foodorders', validateUser,foodorders);

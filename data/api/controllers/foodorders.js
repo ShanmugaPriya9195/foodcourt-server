@@ -21,7 +21,7 @@ module.exports = {
 				next(err);
 			} else{
 				for (let foodorder of foodorders) {
-					foodordersList.push({id: foodorder._id, name: foodorder.name, quantity: foodorder.quantity,price: foodorder.price});
+					foodordersList.push({order_id: foodorder.order_id, name: foodorder.name, quantity: foodorder.quantity,price: foodorder.price});
 				}
 				res.json({status:"success", message: "Foodorders list found!!!", data:{foodorders: foodordersList}});
 							

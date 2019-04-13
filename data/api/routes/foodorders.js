@@ -8,4 +8,4 @@ router.get('/:foodorderId', foodorderController.getById);
 router.put('/:foodorderId', foodorderController.updateById);
 router.delete('/:foodorderId', foodorderController.deleteById);
 
-module.exports = router;	
+module.exports = router;

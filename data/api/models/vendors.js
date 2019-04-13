@@ -1,14 +1,25 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const AutoIncrement_vendor = require('mongoose-sequence')(mongoose);
 const saltRounds = 10;
 
 //Define a schema
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-	_id :Number,
+const VendorSchema = new Schema({
+	vendor_id :Number,
 	name: {
+		type: String,
+		trim: true,		
+		required: true,
+	},
+	
+	mobile:{
+		type: Number,
+		trim: true,
+		required: true
+	},
+	password:{
 		type: String,
 		trim: true,		
 		required: true,
@@ -18,38 +29,46 @@ const UserSchema = new Schema({
 		trim: true,
 		required: true
 	},
-	password: {
-		type: String,
-		trim: true,
-		required: true
-	},
-	mobile:{
-		type: Number,
-		trim: true,
-		required: true
-	},
-	gender:{
+	gst:{
 		type: String,
 		trim: true,
 		required: true
 	} ,	
-	address:{
+	Validity: {
 		type: String,
 		trim: true,
 		required: true
 	},
 	
-				city: {
+	locality:{
 		type: String,
 		trim: true,
 		required: true
-	}
+	},
+	city: {
+		type: String,
+		trim: true,
+		required: true
+	},
+	
+	data:{
+		type: Number,
+		trim: true,
+		required: true
+	},
+	contenttype: {
+		type: String,
+		trim: true,
+		required: true
+},
+	
+	
 },{_id:false});
-UserSchema.plugin(AutoIncrement, {'_id': 'user_id_counter'});
+VendorSchema.plugin(AutoIncrement_vendor,{inc_field: 'vendor_id'});
 
-UserSchema.pre('save', function(next){
+VendorSchema.pre('save', function(next){
 this.password = bcrypt.hashSync(this.password, saltRounds);
 next();
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Vendor', VendorSchema);
