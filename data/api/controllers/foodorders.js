@@ -1,14 +1,24 @@
+'use strict'
+//const sendemail = require('./sendemail.js');
+const foodorderModel = require('../models/foodorders');	
+var username = "shanm181191@gmail.com";				
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
-const foodorderModel = require('../models/foodorders');					
+
 
 module.exports = {
+
+
+
+
 	getById: function(req, res, next) {
 		console.log(req.body);
 		foodorderModel.findById(req.params.foodorderId, function(err, foodorderInfo){
 			if (err) {
 				next(err);
 			} else {
-				res.json({status:"success", message: "Foodorder found!!!", data:{foodorders: foodorderInfo}});
+				res.json({status:"success", message: "Foodord found!!!", data:{foodorders: foodorderInfo}});
 			}
 		});
 	},

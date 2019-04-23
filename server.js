@@ -1,13 +1,17 @@
-const express = require('express');
-const logger = require('morgan');
-const foodorders = require('./routes/foodorders') ;
-const users = require('./routes/users');
-const vendors = require('./routes/vendors');
-const admins = require('./routes/admins');
-const bodyParser = require('body-parser');
-const mongoose = require('./model/foodcourt'); //appbase configuration
+var express = require('express'),
+path = require('path'),
+nodeMailer = require('nodemailer'),smtpTransport = require('nodemailer-smtp-transport'),
+bodyParser = require('body-parser');
+
+var logger = require('morgan');
+var foodorders = require('./routes/foodorders') ;
+var users = require('./routes/users');
+var vendors = require('./routes/vendors');
+var admins = require('./routes/admins');
+
+var mongoose = require('./model/foodcourt'); //appbase configuration
 var jwt = require('jsonwebtoken');
-const app = express();
+var app = express();
 
 app.set('secretKey', 'Foodcourt'); // jwt secret token
 
@@ -27,7 +31,7 @@ app.use('/admins',admins);
 app.use('/vendors',vendors);
 
 // private route
-app.use('/foodorders', validateUser,foodorders);
+app.use('/foodorders',foodorders);
 
 
 app.get('/favicon.ico', function(req, res) {
@@ -46,6 +50,45 @@ function validateUser(req, res, next) {
   });
   
 }
+
+
+
+
+
+   
+    app.set('view engine', 'jade');
+    app.use(express.static('public'));
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.json());
+    
+    app.get('/email', function (req, res) {
+let transporter = nodeMailer.createTransport(smtpTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+              user: 'shanmu9195@gmail.com',
+              pass: 'Sarash9195@@@'
+          },tls:{rejectUnauthorized:false}
+      }));
+      let mailOptions = {
+          from: '"Artisans Web" <shanmu9195@gmail.com>', // sender address
+          to: 'shanmu9195@gmail.com', // list of receivers
+          subject: 'shanmu9195@gmail.com', // Subject line
+          text: 'shanmu9195@gmail.com', // plain text body
+          html: '<b>NodeJS Email Tutorial</b>' // html body
+      };
+
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return console.log(error);
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response);
+              res.json('success');
+          });     
+ 
+    });
+    
 
 
 // handle 404 error
